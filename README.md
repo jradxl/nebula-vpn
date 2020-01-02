@@ -1,7 +1,7 @@
 # nebula-vpn
 An unofficial deb package, for my convenience, for Slack's Overlay network
 
-I wanted to install on a few Debian and Ubuntu machines, so I thought to try writin my first Debian package
+I wanted to install on a few Debian and Ubuntu machines, so I thought to try writing my first Debian package
 
 Sources:
 https://github.com/slackhq/nebula

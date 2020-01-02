@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#Exit immediately if a pipeline...
+set -e
+
+#Treat unset variables and parameters other than the special parameters ‘@’ or ‘*’ as an error
+set -u
+
+#If set, Bash allows filename patterns which match no files to expand to a null string, rather than themselves.
+shopt -s nullglob
+
+function main {
+    echo "Pre Install starting..."
+    
+    FILE=nebula-linux-amd64.tar.gz
+    URL=https://github.com/slackhq/nebula/releases/download/v1.0.0/$FILE
+  
+    #Ensure the archive file does not exist.
+    if [ -f "/tmp/$FILE" ]; then
+        rm /tmp/$FILE
+    fi
+    
+    #Download latest Netbula
+    wget -q -P /tmp/ $URL
+    if [[ $? -ne 0 ]]; then
+        echo "wget failed"
+        echo "Pre Installed failed"
+        exit 1; 
+    else
+        echo "wget suceeded" 
+    fi
+    
+    if [ ! -f "/tmp/$FILE" ]; then
+        echo "$FILE does not exist, wget failed"
+        echo "Pre Installed failed"
+        exit 1
+    fi
+
+    if [ ! -d "/usr/local/bin" ]; then
+        mkdir -p /usr/local/bin
+    fi
+
+    #Declare as array
+    FILES=(/usr/local/bin/nebula*)    
+    for f in "${FILES[@]}"; do
+        echo "Deleteing previous $f"
+        rm $f
+    done
+    
+    tar xf /tmp/$FILE --directory=/usr/local/bin/
+    rm /tmp/$FILE
+    
+    #reDeclare the array
+    FILES=(/usr/local/bin/nebula*)
+    for f in "${FILES[@]}"; do
+        echo "changing owner $f"
+        chown root:root $f
+    done
+    
+    echo "Completed Pre Install..."
+}
+
+main
+exit 0
+

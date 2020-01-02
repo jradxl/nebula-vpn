@@ -1,0 +1,15 @@
+Package: nebula-vpn
+Version: 0.0.1
+Architecture: all
+Maintainer: jradxl@gmail.com
+Depends: wget
+Installed-Size: 10
+Homepage: http://github.com/jradxl
+Description: Slack´s Nebula VPN system
+ A scalable overlay networking tool with a focus on performance, simplicity and security.
+ This DEB package was created as I had a number of Ubuntu/Debian machines I wanted to install it on.
+ If <name> is the name of network you want to start, run: systemctl start nebula@<name>
+ The ca.crt is not present. Read documentation to create ca.crt and the network certs.
+ The service is not started by default
+
+

@@ -1,0 +1,16 @@
+[Unit]
+Description=Custom Nebula %i
+Wants=basic.target
+After=basic.target network.target network-online.target 
+AssertPathExists=/etc/nebula/config-%i.yaml
+
+[Service]
+SyslogIdentifier=nebula
+StandardOutput=syslog
+StandardError=syslog
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/local/bin/nebula -config /etc/nebula/config-%i.yaml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
